@@ -12,16 +12,19 @@
 # next.js
 /backend/.next/*
 /frontend/.next/*
-/out/
+/backend/out/
+/frontend/out/
 
 # Keystone build dir
 /backend/.keystone
 
 # production
-/build
+/backend/build
+/frontend/build
 
 # misc
-.DS_Store
+/backend/.DS_Store
+/frontend/.DS_Store
 
 # Logs
 logs
