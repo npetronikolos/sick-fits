@@ -3,7 +3,8 @@
 # dependencies
 /backend/node_modules
 /frontend/node_modules
-/.pnp
+/backend/.pnp
+/frontend/.pnp
 .pnp.js
 
 # testing
@@ -53,7 +54,7 @@ pids
 *.seed
 *.pid.lock
 
-.api-test-prisma-clients
+/backend/.api-test-prisma-clients
 
 #IDE
 .idea
