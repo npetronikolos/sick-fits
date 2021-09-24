@@ -1,6 +1,6 @@
-import { integer, relationship } from '@keystone-next/keystone/fields';
-import { list } from '@keystone-next/keystone';
-import { rules, isSignedIn } from '../access';
+import { integer, relationship } from "@keystone-next/keystone/fields";
+import { list } from "@keystone-next/keystone";
+import { rules, isSignedIn } from "../access";
 
 export const CartItem = list({
   access: {
@@ -15,16 +15,19 @@ export const CartItem = list({
   },
   ui: {
     listView: {
-      initialColumns: ['product', 'quantity', 'user'],
+      initialColumns: ["product", "quantity", "user"],
     },
   },
   fields: {
     // TODO: Custom Label in here
     quantity: integer({
       defaultValue: 1,
-      isRequired: true,
+      isNullable: false,
+      validation: {
+        isRequired: true,
+      },
     }),
-    product: relationship({ ref: 'Product', isFilterable: true }),
-    user: relationship({ ref: 'User.cart', isFilterable: true }),
+    product: relationship({ ref: "Product", isFilterable: true }),
+    user: relationship({ ref: "User.cart", isFilterable: true }),
   },
 });

@@ -9,6 +9,7 @@ datasource postgresql {
 generator client {
   provider = "prisma-client-js"
   output   = "node_modules/.prisma/client"
+  engineType = "binary"
 }
 
 model User {
@@ -24,7 +25,6 @@ model User {
   passwordResetToken      String?
   passwordResetIssuedAt   DateTime?
   passwordResetRedeemedAt DateTime?
-
   @@index([roleId])
 }
 
@@ -39,13 +39,12 @@ model Product {
   user                  User?         @relation("Product_user", fields: [userId], references: [id])
   userId                String?       @map("user")
   from_CartItem_product CartItem[]    @relation("CartItem_product")
-
   @@index([userId])
 }
 
 model ProductImage {
   id                   String      @id @default(cuid())
-  image                Json?
+  image                String?
   altText              String?
   product              Product?    @relation("Product_photo")
   from_OrderItem_photo OrderItem[] @relation("OrderItem_photo")
@@ -53,12 +52,11 @@ model ProductImage {
 
 model CartItem {
   id        String   @id @default(cuid())
-  quantity  Int?
+  quantity  Int      @default(1)
   product   Product? @relation("CartItem_product", fields: [productId], references: [id])
   productId String?  @map("product")
   user      User?    @relation("CartItem_user", fields: [userId], references: [id])
   userId    String?  @map("user")
-
   @@index([productId])
   @@index([userId])
 }
@@ -73,7 +71,6 @@ model OrderItem {
   quantity    Int?
   order       Order?        @relation("OrderItem_order", fields: [orderId], references: [id])
   orderId     String?       @map("order")
-
   @@index([photoId])
   @@index([orderId])
 }
@@ -85,18 +82,17 @@ model Order {
   user   User?       @relation("Order_user", fields: [userId], references: [id])
   userId String?     @map("user")
   charge String?
-
   @@index([userId])
 }
 
 model Role {
-  id                String   @id @default(cuid())
+  id                String  @id @default(cuid())
   name              String?
-  canManageProducts Boolean?
-  canSeeOtherUsers  Boolean?
-  canManageUsers    Boolean?
-  canManageRoles    Boolean?
-  canManageCart     Boolean?
-  canManageOrders   Boolean?
-  assignedTo        User[]   @relation("User_role")
+  canManageProducts Boolean @default(false)
+  canSeeOtherUsers  Boolean @default(false)
+  canManageUsers    Boolean @default(false)
+  canManageRoles    Boolean @default(false)
+  canManageCart     Boolean @default(false)
+  canManageOrders   Boolean @default(false)
+  assignedTo        User[]  @relation("User_role")
 }

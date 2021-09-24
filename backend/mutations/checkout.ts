@@ -1,4 +1,4 @@
-import { KeystoneContext } from '@keystone-next/keystone/types';
+import { KeystoneContext } from "@keystone-next/keystone/types";
 
 // import stripeConfig from '../lib/stripe';
 
@@ -8,14 +8,18 @@ interface Arguments {
   token: string;
 }
 
-async function checkout(root: any, { token }: Arguments, context: KeystoneContext): Promise<any> {
+async function checkout(
+  root: any,
+  { token }: Arguments,
+  context: KeystoneContext
+): Promise<any> {
   // 1. Make sure they are signed in
   const userId = context.session.itemId;
   if (!userId) {
-    throw new Error('Sorry! You must be signed in to create an order!');
+    throw new Error("Sorry! You must be signed in to create an order!");
   }
   // 1.5 Query the current user
-  const user = await context.lists.User.findOne({
+  const user = await context.query.User.findOne({
     where: { id: userId },
     query: graphql`
       id
@@ -60,7 +64,7 @@ async function checkout(root: any, { token }: Arguments, context: KeystoneContex
   //     throw new Error(err.message);
   //   });
   console.log({ token }); // Use the "unused" variable
-  const charge = { amount, id: 'MADE UP' };
+  const charge = { amount, id: "MADE UP" };
   console.log(charge);
   // 4. Convert the cartItems to OrderItems
   const orderItems = cartItems.map((cartItem: any) => {
@@ -73,9 +77,9 @@ async function checkout(root: any, { token }: Arguments, context: KeystoneContex
     };
     return orderItem;
   });
-  console.log('gonna create the order');
+  console.log("gonna create the order");
   // 5. Create the order and return it
-  const order = await context.db.lists.Order.createOne({
+  const order = await context.db.Order.createOne({
     data: {
       total: charge.amount,
       charge: charge.id,
@@ -86,8 +90,8 @@ async function checkout(root: any, { token }: Arguments, context: KeystoneContex
   console.log({ order });
   // 6. Clean up any old cart item
   const cartItemIds = user.cart.map((cartItem: any) => cartItem.id);
-  console.log('gonna create delete cartItems');
-  await context.lists.CartItem.deleteMany({
+  console.log("gonna create delete cartItems");
+  await context.query.CartItem.deleteMany({
     where: cartItemIds.map((id: string) => ({ id })),
   });
   return order;
