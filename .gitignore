@@ -19,6 +19,9 @@
 # Keystone build dir
 /backend/.keystone
 
+# prisma
+/backend/migrations/*
+
 # production
 /backend/build
 /frontend/build

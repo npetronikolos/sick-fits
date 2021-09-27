@@ -47,9 +47,23 @@ export default withAuth(
         origin: [process.env.FRONTEND_URL!],
         credentials: true,
       },
+      port: 4000,
+      healthCheck: true,
     },
     db: process.env.DATABASE_URL
-      ? { provider: "postgresql", url: process.env.DATABASE_URL }
+      ? {
+          provider: "postgresql",
+          url: process.env.DATABASE_URL,
+          async onConnect(context) {
+            console.log("Connected to the database!");
+            if (process.argv.includes("--seed-data")) {
+              await insertSeedData(context);
+            }
+          },
+          // Optional advanced configuration
+          enableLogging: true,
+          useMigrations: true,
+        }
       : {
           provider: "sqlite",
           url: databaseURL,
