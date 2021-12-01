@@ -1,4 +1,4 @@
-import { AdminConfig } from "@keystone-next/keystone/types";
+import { AdminConfig } from "@keystone-6/core/types";
 import { CustomLogo } from "./components/CustomLogo";
 import { CustomNavigation } from "./components/CustomNavigation";
 

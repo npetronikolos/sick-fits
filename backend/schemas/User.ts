@@ -1,5 +1,5 @@
-import { list } from "@keystone-next/keystone";
-import { text, password, relationship } from "@keystone-next/keystone/fields";
+import { list } from "@keystone-6/core";
+import { text, password, relationship } from "@keystone-6/core/fields";
 import { permissions, rules } from "../access";
 
 export const User = list({
@@ -22,11 +22,7 @@ export const User = list({
   },
   fields: {
     name: text({ validation: { isRequired: true } }),
-    email: text({
-      isIndexed: "unique",
-      isFilterable: true,
-      validation: { isRequired: true },
-    }),
+    email: text({ isIndexed: "unique", validation: { isRequired: true } }),
     password: password(),
     cart: relationship({
       ref: "CartItem.user",

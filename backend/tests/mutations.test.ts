@@ -1,5 +1,5 @@
-import { KeystoneContext } from "@keystone-next/keystone/types";
-import { setupTestRunner } from "@keystone-next/keystone/testing";
+import { KeystoneContext } from "@keystone-6/core/types";
+import { setupTestRunner } from "@keystone-6/core/testing";
 import config from "../keystone";
 
 const FAKE_ID = "cinjfgbkjnfg";
@@ -181,7 +181,7 @@ describe(`Custom mutations`, () => {
         expect(data).toEqual({ addToCart: null });
         expect(errors).toHaveLength(1);
         expect(errors![0].message).toEqual(
-          "Unable to connect a CartItem.product<Product>"
+          `An error occured while resolving relationship fields.\n  - CartItem.product: Access denied: You cannot perform the 'connect' operation on the item '{"id":"${FAKE_ID}"}'. It may not exist.\n  - CartItem.user: Access denied: You cannot perform the 'connect' operation on the item '{"id":"${FAKE_ID}"}'. It may not exist.`
         );
       })
     );
@@ -225,7 +225,7 @@ describe(`Custom mutations`, () => {
         expect(data).toEqual({ addToCart: null });
         expect(errors).toHaveLength(1);
         expect(errors![0].message).toEqual(
-          "Unable to connect a CartItem.product<Product>"
+          `An error occured while resolving relationship fields.\n  - CartItem.product: Access denied: You cannot perform the 'connect' operation on the item '{"id":"${product.id}"}'. It may not exist.`
         );
       })
     );
@@ -252,7 +252,7 @@ describe(`Custom mutations`, () => {
         expect(data).toEqual({ addToCart: null });
         expect(errors).toHaveLength(1);
         expect(errors![0].message).toEqual(
-          "Unable to connect a CartItem.product<Product>"
+          `An error occured while resolving relationship fields.\n  - CartItem.product: Access denied: You cannot perform the 'connect' operation on the item '{"id":"${product.id}"}'. It may not exist.`
         );
       })
     );

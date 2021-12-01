@@ -2,7 +2,6 @@ module.exports = {
   presets: [
     [
       "@babel/preset-env",
-      "next/babel",
       {
         targets: {
           node: 10,
@@ -16,14 +15,13 @@ module.exports = {
       },
     ],
     "@babel/preset-react",
-    "@babel/preset-typescript",
+    // "@babel/preset-typescript",
   ],
   plugins: [
     "@babel/plugin-transform-runtime",
     "@babel/plugin-proposal-class-properties",
     "@babel/proposal-object-rest-spread",
     "@babel/plugin-syntax-dynamic-import",
-    "styled-components",
   ],
   overrides: [
     {
