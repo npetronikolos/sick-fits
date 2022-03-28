@@ -3,7 +3,9 @@
     "titleBar.activeForeground": "#fff",
     "titleBar.inactiveForeground": "#ffffffcc",
     "titleBar.activeBackground": "#FF2C70",
-    "titleBar.inactiveBackground": "#FF2C70CC"
+    "titleBar.inactiveBackground": "#FF2C70CC",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active"
   },
   "editor.formatOnSave": true,
   "[javascript]": {
@@ -16,5 +18,6 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   }
+
   // "prettier.disableLanguages": ["javascript", "javascriptreact"]
 }

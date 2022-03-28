@@ -49,10 +49,11 @@ export default withAuth(
       port: 4000,
       healthCheck: true,
     },
-    db: process.env.DATABASE_URL
+    // db: process.env.DATABASE_URL
+    db: databaseURL
       ? {
           provider: "postgresql",
-          url: process.env.DATABASE_URL,
+          url: databaseURL,
           async onConnect(context) {
             console.log("Connected to the database!");
             if (process.argv.includes("--seed-data")) {
@@ -85,7 +86,7 @@ export default withAuth(
     },
     extendGraphqlSchema,
     ui: {
-      // Show the UI only for poeple who pass this test
+      // Show the UI only for people who pass this test
       isAccessAllowed: ({ session }) =>
         // console.log(session);
         !!session,
