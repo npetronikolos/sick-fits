@@ -1,5 +1,4 @@
-import { useQuery } from "@apollo/client";
-import gql from "graphql-tag";
+import { useQuery, gql } from "@apollo/client";
 import Head from "next/head";
 import Link from "next/link";
 import PaginationStyles from "./styles/PaginationStyles";
@@ -8,17 +7,17 @@ import { perPage } from "../config";
 
 export const PAGINATION_QUERY = gql`
   query PAGINATION_QUERY {
-    _allProductsMeta {
-      count
-    }
+    productsCount
   }
 `;
+
+// productsCount(where: { status: { equals: "AVAILABLE" } })
 
 export default function Pagination({ page }) {
   const { error, loading, data } = useQuery(PAGINATION_QUERY);
   if (loading) return "Loading...";
   if (error) return <DisplayError error={error} />;
-  const { count } = data._allProductsMeta;
+  const count = data.productsCount;
   const pageCount = Math.ceil(count / perPage);
   return (
     <PaginationStyles>

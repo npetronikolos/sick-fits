@@ -1,5 +1,6 @@
 import { createAuth } from "@keystone-6/auth";
 import { config } from "@keystone-6/core";
+import dotenv from "dotenv";
 import { statelessSessions } from "@keystone-6/core/session";
 import { permissionsList } from "./schemas/fields";
 import { Role } from "./schemas/Role";
@@ -15,6 +16,7 @@ import { sendPasswordResetEmail } from "./lib/mail";
 import { extendGraphqlSchema } from "./mutations";
 
 const databaseURL = process.env.DATABASE_URL;
+const frontEndURL = process.env.FRONTEND_URL;
 
 const sessionConfig = {
   maxAge: 60 * 60 * 24 * 360, // How long they stay signed in?
@@ -22,6 +24,9 @@ const sessionConfig = {
     process.env.COOKIE_SECRET || "this secret should only be used in testing",
 };
 
+// createAuth configures signin functionality based on the config below. Note this only implements
+// authentication, i.e signing in as an item using identity and secret fields in a list. Session
+// management and access control are controlled independently in the main keystone config.
 const { withAuth } = createAuth({
   listKey: "User",
   identityField: "email",
@@ -43,13 +48,12 @@ export default withAuth(
   config({
     server: {
       cors: {
-        origin: [process.env.FRONTEND_URL!],
+        origin: frontEndURL,
         credentials: true,
       },
       port: 4000,
       healthCheck: true,
     },
-    // db: process.env.DATABASE_URL
     db: databaseURL
       ? {
           provider: "postgresql",
@@ -86,10 +90,8 @@ export default withAuth(
     },
     extendGraphqlSchema,
     ui: {
-      // Show the UI only for people who pass this test
-      isAccessAllowed: ({ session }) =>
-        // console.log(session);
-        !!session,
+      // Show the UI only for poeple who pass this test
+      isAccessAllowed: ({ session }) => !!session,
     },
     session: statelessSessions(sessionConfig),
   })

@@ -1,6 +1,6 @@
 import { list } from "@keystone-6/core";
 import { text, password, relationship } from "@keystone-6/core/fields";
-import { permissions, rules } from "../access";
+import { permissions, rules, isSignedIn } from "../access";
 
 export const User = list({
   access: {
