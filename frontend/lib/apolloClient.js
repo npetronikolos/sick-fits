@@ -1,5 +1,11 @@
 import { useMemo } from "react";
-import { ApolloClient, HttpLink, InMemoryCache, from } from "@apollo/client";
+import {
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+  NormalizedCacheObject,
+  from,
+} from "@apollo/client";
 import { createUploadLink } from "apollo-upload-client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
@@ -12,6 +18,8 @@ import paginationField from "./paginationField";
 
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
+let apolloClient;
+
 // const httpLink = new HttpLink({
 //   uri: `http://localhost:4000/api/graphql`, //process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
 //   fetchOptions: {
@@ -23,7 +31,9 @@ const httpLink = new createUploadLink({
   // uri: process.env.NODE_ENV === "development" ? endpoint : prodEndpoint,
   uri: `http://localhost:4000/api/graphql`,
   fetchOptions: {
-    credentials: "include", //credentials: "same-origin",
+    credentials: "include",
+    // fetch: enhancedFetch,
+    // credentials: "same-origin",
   },
 });
 
@@ -57,8 +67,6 @@ const authLink = setContext((_, { headers }) => {
     },
   };
 });
-
-let apolloClient;
 
 function createApolloClient() {
   return new ApolloClient({

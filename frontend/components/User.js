@@ -10,9 +10,6 @@ const CURRENT_USER_QUERY = gql`
         cart {
           id
           quantity
-          role {
-            canManageProducts
-          }
           product {
             id
             price

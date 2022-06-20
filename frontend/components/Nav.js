@@ -1,25 +1,21 @@
 import Link from "next/link";
 import { useCart } from "../lib/cartState";
 import CartCount from "./CartCount";
+import SignOut from "./SignOut";
 import NavStyles from "./styles/NavStyles";
 import { useUser } from "./User";
-import SignOut from "./SignOut";
-import AdminMenuDefault from "./AdminDropdownMenuComponent";
 
 export default function Nav() {
   const user = useUser();
-  // console.log(user.role.canManageProducts);
-  // const userpermManageProducts = useUserPermcanManageProducts();
-  // console.log(userpermManageProducts);
   const { openCart } = useCart();
   return (
     <NavStyles>
       <Link href="/products">Products</Link>
       {user && (
         <>
+          <Link href="/sell">Sell</Link>
           <Link href="/orders">Orders</Link>
           <Link href="/account">Account</Link>
-          <Link href="/createproduct">Create Product</Link>
           <SignOut />
           <button type="button" onClick={openCart}>
             My Cart
