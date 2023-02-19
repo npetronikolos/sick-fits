@@ -1,10 +1,10 @@
-import { KeystoneContext } from "@keystone-6/core/types";
 import { Session } from "../types";
+import { Context } from ".keystone/types";
 
 async function addToCart(
   root: any,
-  { productId }: { productId: string },
-  context: KeystoneContext
+  { productId }: { productId?: string | null },
+  context: Context
 ): Promise<any> {
   console.log("ADDING TO CART!");
   // 1. Query the current user see if they are signed in
@@ -28,13 +28,13 @@ async function addToCart(
       `There are already ${existingCartItem.quantity}, increment by 1!`
     );
     // 3. See if the current item is in their cart
-    // 4. if it is, increment by 1
+    // 4. if itis, increment by 1
     return await context.db.CartItem.updateOne({
       where: { id: existingCartItem.id },
       data: { quantity: existingCartItem.quantity + 1 },
     });
   }
-  // 4. if it isn't, create a new cart item!
+  // 4. if it isnt, create a new cart item!
   return await context.db.CartItem.createOne({
     data: {
       product: { connect: { id: productId } },

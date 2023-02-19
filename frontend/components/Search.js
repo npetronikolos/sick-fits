@@ -1,6 +1,7 @@
 import { useLazyQuery, gql } from "@apollo/client";
 import { resetIdCounter, useCombobox } from "downshift";
 import debounce from "lodash.debounce";
+
 import { useRouter } from "next/router";
 import { DropDown, DropDownItem, SearchStyles } from "./styles/DropDown";
 
@@ -47,11 +48,14 @@ export default function Search() {
   } = useCombobox({
     items,
     onInputValueChange() {
-      findItemsButChill({
-        variables: {
-          searchTerm: inputValue,
+      findItemsButChill(
+        {
+          variables: {
+            searchTerm: inputValue,
+          },
         },
-      });
+        getComboboxProps
+      );
     },
     onSelectedItemChange({ selectedItem }) {
       router.push({

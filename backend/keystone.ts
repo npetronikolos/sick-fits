@@ -14,6 +14,7 @@ import "dotenv/config";
 import { insertSeedData } from "./seed-data";
 import { sendPasswordResetEmail } from "./lib/mail";
 import { extendGraphqlSchema } from "./mutations";
+import { TypeInfo } from ".keystone/types";
 
 const databaseURL = process.env.DATABASE_URL;
 const frontEndURL = process.env.FRONTEND_URL;
@@ -24,7 +25,7 @@ const sessionConfig = {
   secret: cookieSecret || "this secret should only be used in testing",
 };
 
-// createAuth configures signin functionality based on the config below. Note this only implements
+// createAuth configures sign in functionality based on the config below. Note this only implements
 // authentication, i.e signing in as an item using identity and secret fields in a list. Session
 // management and access control are controlled independently in the main keystone config.
 const { withAuth } = createAuth({
@@ -68,7 +69,7 @@ const { withAuth } = createAuth({
 });
 
 export default withAuth(
-  config({
+  config<TypeInfo>({
     server: {
       cors: {
         origin: frontEndURL,
@@ -112,10 +113,11 @@ export default withAuth(
       Role,
     },
     extendGraphqlSchema,
-    ui: {
-      // Show the UI only for poeple who pass this test
-      isAccessAllowed: ({ session }) => !!session,
-    },
+    // removed by keystone
+    // ui: {
+    //   // Show the UI only for people who pass this test
+    //   isAccessAllowed: ({ session }) => !!session,
+    // },
     session: statelessSessions(sessionConfig),
   })
 );

@@ -1,6 +1,6 @@
-import { KeystoneContext } from "@keystone-6/core/types";
+import { Context } from ".keystone/types";
 
-import stripeConfig from "../lib/stripe";
+// import stripeConfig from '../lib/stripe';
 
 const graphql = String.raw;
 
@@ -11,7 +11,7 @@ interface Arguments {
 async function checkout(
   root: any,
   { token }: Arguments,
-  context: KeystoneContext
+  context: Context
 ): Promise<any> {
   // 1. Make sure they are signed in
   const userId = context.session.itemId;
@@ -52,19 +52,19 @@ async function checkout(
   }, 0);
   console.log(amount);
   // 3. create the charge with the stripe library
-  const charge = await stripeConfig.paymentIntents
-    .create({
-      amount,
-      currency: "USD",
-      confirm: true,
-      payment_method: token,
-    })
-    .catch((err) => {
-      console.log(err);
-      throw new Error(err.message);
-    });
+  // const charge = await stripeConfig.paymentIntents
+  //   .create({
+  //     amount,
+  //     currency: 'USD',
+  //     confirm: true,
+  //     payment_method: token,
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //     throw new Error(err.message);
+  //   });
   console.log({ token }); // Use the "unused" variable
-  // const charge = { amount, id: "MADE UP" };
+  const charge = { amount, id: "MADE UP" };
   console.log(charge);
   // 4. Convert the cartItems to OrderItems
   const orderItems = cartItems.map((cartItem: any) => {

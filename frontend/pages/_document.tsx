@@ -1,8 +1,14 @@
-import Document, { Html, Head, NextScript, Main } from "next/document";
+import Document, {
+  DocumentContext,
+  Html,
+  Head,
+  NextScript,
+  Main,
+} from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
 
@@ -29,7 +35,7 @@ export default class MyDocument extends Document {
   }
   render() {
     return (
-      <Html lang="en-CA">
+      <Html lang="en-US">
         <Head>
           <link rel="icon" href="/favicon.png" />
         </Head>
@@ -41,3 +47,24 @@ export default class MyDocument extends Document {
     );
   }
 }
+
+// class MyDocument extends Document {
+//   static async getInitialProps(ctx: DocumentContext) {
+//     const initialProps = await Document.getInitialProps(ctx);
+
+//     return initialProps;
+//   }
+//   render() {
+//     return (
+//       <Html lang="en-US">
+//         <Head />
+//         <body>
+//           <Main />
+//           <NextScript />
+//         </body>
+//       </Html>
+//     );
+//   }
+// }
+
+// export default MyDocument;
