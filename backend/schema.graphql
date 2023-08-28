@@ -254,21 +254,7 @@ input StringNullableFilter {
   startsWith: String
   endsWith: String
   mode: QueryMode
-  not: NestedStringNullableFilter
-}
-
-input NestedStringNullableFilter {
-  equals: String
-  in: [String!]
-  notIn: [String!]
-  lt: String
-  lte: String
-  gt: String
-  gte: String
-  contains: String
-  startsWith: String
-  endsWith: String
-  not: NestedStringNullableFilter
+  not: StringNullableFilter
 }
 
 input IntNullableFilter {
@@ -636,6 +622,7 @@ type Role {
   canManageProducts: Boolean
   canSeeOtherUsers: Boolean
   canManageUsers: Boolean
+  canManageOrderItems: Boolean
   canManageRoles: Boolean
   canManageCart: Boolean
   canManageOrders: Boolean
@@ -656,6 +643,7 @@ input RoleWhereInput {
   canManageProducts: BooleanFilter
   canSeeOtherUsers: BooleanFilter
   canManageUsers: BooleanFilter
+  canManageOrderItems: BooleanFilter
   canManageRoles: BooleanFilter
   canManageCart: BooleanFilter
   canManageOrders: BooleanFilter
@@ -679,6 +667,7 @@ input RoleOrderByInput {
   canManageProducts: OrderDirection
   canSeeOtherUsers: OrderDirection
   canManageUsers: OrderDirection
+  canManageOrderItems: OrderDirection
   canManageRoles: OrderDirection
   canManageCart: OrderDirection
   canManageOrders: OrderDirection
@@ -689,6 +678,7 @@ input RoleUpdateInput {
   canManageProducts: Boolean
   canSeeOtherUsers: Boolean
   canManageUsers: Boolean
+  canManageOrderItems: Boolean
   canManageRoles: Boolean
   canManageCart: Boolean
   canManageOrders: Boolean
@@ -712,6 +702,7 @@ input RoleCreateInput {
   canManageProducts: Boolean
   canSeeOtherUsers: Boolean
   canManageUsers: Boolean
+  canManageOrderItems: Boolean
   canManageRoles: Boolean
   canManageCart: Boolean
   canManageOrders: Boolean

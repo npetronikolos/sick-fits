@@ -13,6 +13,10 @@ export const permissionFields = {
     defaultValue: false,
     label: "User can Edit other users",
   }),
+  canManageOrderItems: checkbox({
+    defaultValue: false,
+    label: "User can Edit order items",
+  }),
   canManageRoles: checkbox({
     defaultValue: false,
     label: "User can CRUD roles",

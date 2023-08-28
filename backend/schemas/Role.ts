@@ -1,5 +1,6 @@
 import { relationship, text } from "@keystone-6/core/fields";
 import { list } from "@keystone-6/core";
+import { allOperations } from "@keystone-6/core/access";
 import { permissions, rules, isSignedIn } from "../access";
 import { permissionFields } from "./fields";
 
